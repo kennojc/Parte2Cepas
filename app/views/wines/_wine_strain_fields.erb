@@ -1,0 +1,8 @@
+
+  <div class="nested-fields">
+    <%= f.select :strain_id, Strain.all.map{|s|[s.name, s.id]} %>
+    <div class="form-group">
+        <%= f.label :percentage, '%' %>
+        <%= f.text_field :percentage, class: 'form-control' %>
+    </div>
+</div>

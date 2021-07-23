@@ -16,7 +16,17 @@
     <%= form.text_field :name %>
   </div>
 
+<h3>Cepas</h3>
+  <div id="wine_strains">
+    <%= form.fields_for :wine_strains do |ws| %>
+      <%= render 'wine_strain_fields', :f => ws %>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association 'add cepa', form, :wine_strains %>
+    </div>
+  </div>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Guardar Vino' %>
   </div>
 <% end %>
