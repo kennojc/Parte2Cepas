@@ -1,5 +1,7 @@
 class WinesController < ApplicationController
   before_action :set_wine, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :ensure_admin, except: [:index, :show]
 
   # GET /wines or /wines.json
   def index
@@ -22,16 +24,19 @@ class WinesController < ApplicationController
 
   # POST /wines or /wines.json
   def create
-    @wine = Wine.new(wine_params)
-
-    respond_to do |format|
-      if @wine.save
-        format.html { redirect_to @wine, notice: "Wine was successfully created." }
-        format.json { render :show, status: :created, location: @wine }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @wine.errors, status: :unprocessable_entity }
+    if current_user.admin?
+      @wine = Wine.new(wine_params)
+      respond_to do |format|
+        if @wine.save
+          format.html { redirect_to @wine, notice: "Wine was successfully created." }
+          format.json { render :show, status: :created, location: @wine }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @wine.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to root_path, notice: 'Solamente Peter está autorizado'
     end
   end
 
@@ -61,6 +66,12 @@ class WinesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_wine
       @wine = Wine.find(params[:id])
+    end
+
+    def ensure_admin
+      unless current_user.admin?
+        redirect_to(root_path, notice: 'Solamente autorizado para Peter')
+      end
     end
 
     # Only allow a list of trusted parameters through.
