@@ -1,0 +1,16 @@
+<div class='nested-fields'>   
+    <div class="field">
+        <%= f.label :name %> 
+        <select name="wine[enologist_id]">
+            <%= @enologists.each do |e| %>
+                <option value="<%= e.id %>">
+                <%= e.name %>
+                </option> 
+            <% end %> 
+        </select>
+    </div>
+    <div class="field">
+        <%= f.label :score %> 
+        <%= f.number_field :score, step: :any %>
+    </div>
+</div>

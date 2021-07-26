@@ -1,7 +1,10 @@
 class Wine < ApplicationRecord
     has_many :wine_strains
     has_many :strains, through: :wine_strains, dependent: :destroy
-    accepts_nested_attributes_for :strains, :wine_strains, reject_if: :all_blank, allow_destroy: true
+    has_many :wine_enologists
+    has_many :enologists, through: :wine_enologists, dependent: :destroy
+    accepts_nested_attributes_for :strains, :wine_strains, :wine_enologists, :enologists, reject_if: :all_blank, allow_destroy: true
+
 
     def recipe
         @percentages = Array.new

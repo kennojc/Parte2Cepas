@@ -6,6 +6,8 @@ class WinesController < ApplicationController
   # GET /wines or /wines.json
   def index
     @wines = Wine.all
+    @wine_enologists = WineEnologist.where(wine_id: :id)
+
   end
 
   # GET /wines/1 or /wines/1.json
@@ -16,6 +18,8 @@ class WinesController < ApplicationController
   def new
     @wine = Wine.new
     @wine.wine_strains.build
+    @enologists = Enologist.all.order(:name)
+
   end
 
   # GET /wines/1/edit
@@ -26,6 +30,8 @@ class WinesController < ApplicationController
   def create
     if current_user.admin?
       @wine = Wine.new(wine_params)
+      @enologists = Enologist.all
+      @wine.enologists << @enologists
       respond_to do |format|
         if @wine.save
           format.html { redirect_to @wine, notice: "Wine was successfully created." }
@@ -76,6 +82,6 @@ class WinesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def wine_params
-      params.require(:wine).permit(:name, wine_strains_attributes:[:id, :strain_id, :percentage, :_destroy])
+      params.require(:wine).permit(:name, wine_strains_attributes:[:id, :strain_id, :percentage, :_destroy], wine_enologists_attributes: [:id, :wine_id, :enologist_id, :score])
     end
 end

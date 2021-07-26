@@ -26,6 +26,16 @@
     </div>
   </div>
 
+  <h3>Puntaje:</h3>
+  <div id='wine_enologists'>
+    <%= form.fields_for :wine_enologists do |we| %>
+      <%= render 'wine_enologist_fields', :f => we %>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association 'Calificar', form, :wine_enologists %>
+    </div>
+  </div> 
+
   <div class="actions">
     <%= form.submit 'Guardar Vino' %>
   </div>
