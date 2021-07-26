@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_013013) do
+ActiveRecord::Schema.define(version: 2021_07_26_025333) do
+
+  create_table "enologist_magazines", force: :cascade do |t|
+    t.integer "role"
+    t.integer "enologist_id", null: false
+    t.integer "magazine_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enologist_id"], name: "index_enologist_magazines_on_enologist_id"
+    t.index ["magazine_id"], name: "index_enologist_magazines_on_magazine_id"
+  end
+
+  create_table "enologists", force: :cascade do |t|
+    t.string "name"
+    t.integer "age"
+    t.string "country"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "magazines", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "strains", force: :cascade do |t|
     t.string "name"
@@ -31,6 +55,16 @@ ActiveRecord::Schema.define(version: 2021_07_26_013013) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wine_enologists", force: :cascade do |t|
+    t.integer "score"
+    t.integer "wine_id", null: false
+    t.integer "enologist_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["enologist_id"], name: "index_wine_enologists_on_enologist_id"
+    t.index ["wine_id"], name: "index_wine_enologists_on_wine_id"
+  end
+
   create_table "wine_strains", force: :cascade do |t|
     t.integer "percentage"
     t.integer "wine_id", null: false
@@ -47,6 +81,10 @@ ActiveRecord::Schema.define(version: 2021_07_26_013013) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "enologist_magazines", "enologists"
+  add_foreign_key "enologist_magazines", "magazines"
+  add_foreign_key "wine_enologists", "enologists"
+  add_foreign_key "wine_enologists", "wines"
   add_foreign_key "wine_strains", "strains"
   add_foreign_key "wine_strains", "wines"
 end
