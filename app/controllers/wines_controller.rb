@@ -19,11 +19,15 @@ class WinesController < ApplicationController
     @wine = Wine.new
     @wine.wine_strains.build
     @enologists = Enologist.all.order(:name)
+    @wine.wine_enologists.build
+    @Wine_enologist = WineEnologist.all
 
   end
 
   # GET /wines/1/edit
   def edit
+    @enologists = Enologist.all.order(:name) 
+    @wine.enologists << @enologists
   end
 
   # POST /wines or /wines.json
