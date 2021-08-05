@@ -1,4 +1,6 @@
 class EnologistMagazine < ApplicationRecord
-  belongs_to :enologist
-  belongs_to :magazine
+  enum role: {editor: 0, writer: 1, reviewer:2 }
+  belongs_to :enologist, optional: true
+  belongs_to :magazine, optional: true
+  
 end

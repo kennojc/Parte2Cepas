@@ -4,6 +4,7 @@ class EnologistsController < ApplicationController
   # GET /enologists or /enologists.json
   def index
     @enologists = Enologist.all
+    @magazines = Magazine.all
   end
 
   # GET /enologists/1 or /enologists/1.json
@@ -13,6 +14,10 @@ class EnologistsController < ApplicationController
   # GET /enologists/new
   def new
     @enologist = Enologist.new
+    @enologist.enologist_magazines.build
+    @magazines = Magazine.all
+    @Wine_enologist = WineEnologist.all
+
   end
 
   # GET /enologists/1/edit
@@ -22,6 +27,7 @@ class EnologistsController < ApplicationController
   # POST /enologists or /enologists.json
   def create
     @enologist = Enologist.new(enologist_params)
+    
 
     respond_to do |format|
       if @enologist.save
@@ -64,6 +70,6 @@ class EnologistsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def enologist_params
-      params.require(:enologist).permit(:name, :age, :country)
+      params.require(:enologist).permit(:name, :age, :country, enologist_magazines_attributes:[:id, :enologist_id, :magazine_id, :role, :_destroy])
     end
 end

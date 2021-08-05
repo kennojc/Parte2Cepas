@@ -1,0 +1,7 @@
+<div class='nested-fields'>   
+    <%= f.select :magazine_id, Magazine.all.map{ |m|[m.name, m.id]} %>
+    <div class="form-group">
+        <%= f.label :role, 'Rol en Revista' %>
+        <%= f.select :role, EnologistMagazine.roles.keys %>
+    </div>
+</div>

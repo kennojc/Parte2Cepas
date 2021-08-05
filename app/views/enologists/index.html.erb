@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Enologists</h1>
+<h1>Enólogos</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Country</th>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>País</th>
+      <th>Revista y Rol(es)</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= enologist.name %></td>
         <td><%= enologist.age %></td>
         <td><%= enologist.country %></td>
+        <td><%= enologist.jobs %></td>
         <td><%= link_to 'Show', enologist %></td>
         <td><%= link_to 'Edit', edit_enologist_path(enologist) %></td>
         <td><%= link_to 'Destroy', enologist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
